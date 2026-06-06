@@ -1,0 +1,25 @@
+# Node modules
+node_modules/
+# Dependencies directories (iOS/Android native projects)
+ios/
+android/
+# Expo caches
+.expo/
+.expo-shared/
+# Metro bundler cache
+metro-cache/
+# Build outputs
+build/
+# Logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+*.log
+# IDE/editor files
+.vscode/
+.idea/
+# OS generated files
+.DS_Store
+Thumbs.db
+# Environment files (if any)
+.env

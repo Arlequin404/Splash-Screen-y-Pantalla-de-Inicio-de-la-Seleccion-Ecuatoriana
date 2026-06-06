@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Ecuador Mundial",
+    "slug": "ecuador-mundial-simple",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#F6D32D"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.ecuador.mundial.simple"
+    }
+  }
+}
