@@ -8,9 +8,6 @@ Aplicación móvil *React Native* desarrollada con **Expo** que muestra la lista
 # 1️⃣ Clonar el repositorio (o descargar los archivos)
 git clone <repo‑url>
 
-# 2️⃣ Entrar al directorio del proyecto
-cd "C:/Users/Aalex/Desktop/ecuador‑mundial‑simple"
-
 # 3️⃣ Instalar dependencias con npm o yarn
 npm install   # o: yarn install
 ```
