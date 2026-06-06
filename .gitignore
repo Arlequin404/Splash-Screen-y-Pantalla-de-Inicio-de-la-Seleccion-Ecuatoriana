@@ -1,25 +1,27 @@
-# Node modules
 node_modules/
-# Dependencies directories (iOS/Android native projects)
-ios/
-android/
-# Expo caches
+# Expo specific
 .expo/
 .expo-shared/
-# Metro bundler cache
-metro-cache/
-# Build outputs
-build/
 # Logs
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-*.log
-# IDE/editor files
-.vscode/
-.idea/
-# OS generated files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# OS files
 .DS_Store
 Thumbs.db
-# Environment files (if any)
+# React Native
+android/
+ios/
+# Build output
+metro-config.js
+babel.config.js
+metro.config.js
+# Gradle
+.gradle/
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**
+fastlane/test_output/**
+# Misc
 .env

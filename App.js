@@ -1,23 +1,26 @@
-/*
- * Aplicación móvil de selección ecuatoriana para el Mundial 2026
- * Construida con React Native y Expo.
- * Muestra una lista de jugadores convocados y permite ver detalles.
+/**
+ * Aplicación Selección Ecuatoriana 2026 – React Native / Expo
+ * Contiene la lógica, interfaz de usuario y estilos de la app.
  */
 
 import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  Modal,
-  ScrollView,
-  StatusBar,
+  SafeAreaView,     // Contenedor para evitar muescas/notches de pantalla.
+  View,             // Contenedor básico (similar a un div).
+  Text,             // Renderiza texto.
+  StyleSheet,       // Permite definir estilos tipo CSS.
+  FlatList,         // Listado optimizado de alto rendimiento.
+  Image,            // Muestra imágenes locales o remotas.
+  TouchableOpacity, // Botón táctil con efecto de opacidad al pulsar.
+  Modal,            // Ventana emergente superpuesta.
+  ScrollView,       // Contenedor con desplazamiento (scroll).
+  StatusBar,        // Controla la barra de estado del celular.
 } from 'react-native';
 
+// Logotipo de la selección
+const logoEcuador = require('./assets/logo-ecuador.png');
+
+// Listado de jugadores convocados (datos estáticos)
 const jugadores = [
   {
     id: '1',
@@ -201,27 +204,21 @@ const jugadores = [
   },
 ];
 
-/*
- * SplashScreen: pantalla de bienvenida con logo y título.
- */
+// Pantalla de carga inicial (Splash Screen)
 function SplashScreen() {
   return (
     <SafeAreaView style={styles.splashContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#F6D32D" />
-      <View style={styles.logoCircle}>
-        <Text style={styles.logoText}>EC</Text>
-      </View>
+      <Image source={logoEcuador} style={styles.splashLogo} />
       <Text style={styles.splashTitle}>Selección Ecuatoriana</Text>
       <Text style={styles.splashSubtitle}>Rumbo al Mundial 2026</Text>
     </SafeAreaView>
   );
 }
 
-/*
- * DetailModal: muestra información detallada del jugador seleccionado.
- */
+// Modal de detalles del jugador seleccionado
 function DetailModal({ jugador, visible, onClose }) {
-  if (!jugador) return null;
+  if (!jugador) return null; // Si no hay selección, no renderiza
 
   return (
     <Modal visible={visible} transparent animationType="slide">
@@ -229,6 +226,7 @@ function DetailModal({ jugador, visible, onClose }) {
         <View style={styles.modalBox}>
           <Image source={{ uri: jugador.foto }} style={styles.modalImage} />
           <Text style={styles.modalName}>{jugador.nombre}</Text>
+          
           <View style={styles.infoBox}>
             <Text style={styles.infoText}>Edad: {jugador.edad} años</Text>
             <Text style={styles.infoText}>Equipo: {jugador.equipo}</Text>
@@ -236,6 +234,7 @@ function DetailModal({ jugador, visible, onClose }) {
             <Text style={styles.infoText}>Origen: {jugador.origen}</Text>
             <Text style={styles.infoText}>Posición: {jugador.posicion}</Text>
           </View>
+          
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>Cerrar</Text>
           </TouchableOpacity>
@@ -245,9 +244,11 @@ function DetailModal({ jugador, visible, onClose }) {
   );
 }
 
+// Pantalla principal con listado de jugadores
 function HomeScreen() {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(null); // Jugador seleccionado para ver detalle
 
+  // Dibuja la tarjeta del jugador en la lista
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.card} onPress={() => setSelected(item)}>
       <Image source={{ uri: item.foto }} style={styles.playerImage} />
@@ -263,15 +264,24 @@ function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#0B3D2E" />
+      
+      {/* Barra superior */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Ecuador 2026</Text>
-        <Text style={styles.headerSubtitle}>Listado de convocados</Text>
+        <Image source={logoEcuador} style={styles.headerLogo} />
+        <View style={styles.headerTextBox}>
+          <Text style={styles.headerTitle}>Ecuador 2026</Text>
+          <Text style={styles.headerSubtitle}>Listado de convocados</Text>
+        </View>
       </View>
+      
+      {/* Descripción corta */}
       <ScrollView style={styles.descriptionBox}>
         <Text style={styles.descriptionText}>
           Aplicación móvil básica desarrollada con React Native y Expo. Toca cualquier jugador para revisar su información principal.
         </Text>
       </ScrollView>
+      
+      {/* Lista de convocados */}
       <FlatList
         data={jugadores}
         keyExtractor={(item) => item.id}
@@ -279,15 +289,19 @@ function HomeScreen() {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
       />
+      
+      {/* Modal de detalle */}
       <DetailModal jugador={selected} visible={!!selected} onClose={() => setSelected(null)} />
     </SafeAreaView>
   );
 }
 
+// Componente raíz: maneja la pantalla de bienvenida y la de inicio
 export default function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(true); // Controla el splash screen
 
   useEffect(() => {
+    // Oculta el splash screen tras 2.2 segundos
     const timer = setTimeout(() => setShowSplash(false), 2200);
     return () => clearTimeout(timer);
   }, []);
@@ -295,6 +309,7 @@ export default function App() {
   return showSplash ? <SplashScreen /> : <HomeScreen />;
 }
 
+// Estilos de la aplicación (colores de la bandera y Flexbox)
 const styles = StyleSheet.create({
   splashContainer: {
     flex: 1,
@@ -303,21 +318,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 24,
   },
-  logoCircle: {
-    width: 130,
-    height: 130,
-    borderRadius: 65,
-    backgroundColor: '#0B3D2E',
-    justifyContent: 'center',
-    alignItems: 'center',
+  splashLogo: {
+    width: 160,
+    height: 160,
+    resizeMode: 'contain',
     marginBottom: 24,
-    borderWidth: 6,
-    borderColor: '#005BBB',
-  },
-  logoText: {
-    color: '#F6D32D',
-    fontSize: 42,
-    fontWeight: 'bold',
   },
   splashTitle: {
     fontSize: 30,
@@ -337,11 +342,22 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#0B3D2E',
-    paddingTop: 20,
-    paddingBottom: 22,
+    paddingTop: 18,
+    paddingBottom: 20,
     paddingHorizontal: 20,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerLogo: {
+    width: 58,
+    height: 58,
+    resizeMode: 'contain',
+    marginRight: 14,
+  },
+  headerTextBox: {
+    flex: 1,
   },
   headerTitle: {
     color: '#F6D32D',
